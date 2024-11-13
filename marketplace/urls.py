@@ -23,6 +23,7 @@ from marketplace import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('orders/', include('orders.urls')),
+    path('users/', include('users.urls', namespace="users")),
 ]
 
 if settings.DEBUG:

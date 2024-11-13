@@ -1,5 +1,5 @@
 from django import forms
-from .models import Client, Product, UserStatus, Profile
+from .models import Client, Product, UserStatus
 from django.contrib.auth.models import User
 
 #
@@ -28,10 +28,11 @@ from django.contrib.auth.models import User
 # forms.py
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
-class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    email = forms.EmailField()
+class UserRegistrationForm(UserCreationForm):
+    address = forms.CharField(max_length=255, required=True)
+    phone = forms.CharField(max_length=15, required=True)
     role = forms.ChoiceField(choices=[
         ('Client', 'Client'),
         ('Seller', 'Seller'),
@@ -41,7 +42,18 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'role']
+        fields = ['username', 'email', 'password1', 'password2']  # стандартные поля для UserCreationForm
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if commit:
+            user.save()
+
+        # Сохраняем профиль с дополнительными данными
+        profile = Profile(user=user, address=self.cleaned_data['address'], phone=self.cleaned_data['phone'], role=self.cleaned_data['role'])
+        profile.save()
+
+        return user
 
 
 
