@@ -1,5 +1,48 @@
 from django import forms
-from .models import Client
+from .models import Client, Product, UserStatus, Profile
+from django.contrib.auth.models import User
+
+#
+# class UserRegistrationForm(forms.ModelForm):
+#     status = forms.ModelChoiceField(queryset=UserStatus.objects.all(), required=True)
+#     address = forms.CharField(max_length=255, required=False)
+#     phone = forms.CharField(max_length=15, required=False)
+#
+#     class Meta:
+#         model = User
+#         fields = ['username', 'password', 'email']
+#
+#     def save(self, commit=True):
+#         user = super().save(commit=False)
+#         user.set_password(self.cleaned_data['password'])
+#         if commit:
+#             user.save()
+#             Profile.objects.update_or_create(user=user, defaults={
+#                 'status': self.cleaned_data['status'],
+#                 'address': self.cleaned_data['address'],
+#                 'phone': self.cleaned_data['phone']
+#             })
+#         return user
+
+
+# forms.py
+from django import forms
+from django.contrib.auth.models import User
+
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.EmailField()
+    role = forms.ChoiceField(choices=[
+        ('Client', 'Client'),
+        ('Seller', 'Seller'),
+        ('Courier', 'Courier'),
+        ('Admin', 'Admin')
+    ])
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password', 'role']
+
 
 
 class ClientRegistrationForm(forms.ModelForm):
@@ -25,3 +68,10 @@ class ClientRegistrationForm(forms.ModelForm):
 class ClientLoginForm(forms.Form):
     email = forms.EmailField(label="Email")
     password = forms.CharField(widget=forms.PasswordInput, label="Password")
+
+
+
+class AddProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['seller', 'count', 'price', 'category', 'name', 'image']

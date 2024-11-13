@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>{{ product.name }}</h1>
+    <div class="product-detail">
+
+        <div class="product-info">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="Image for {{ product.name }}"
+                 style="max-width: 300px; margin-bottom: 10px;">
+            {% else %}
+            <img src="{% static 'default_product.jpg' %}" alt="Default Image">
+            {% endif %}
+            <p><strong>Description:</strong> {{ product.description }}</p>
+            <p><strong>Price:</strong> ${{ product.price }}</p>
+            <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                {% csrf_token %}
+                <button type="submit">Add to Cart</button>
+            </form>
+            <a href="{% url 'home' %}" class="back-link">← Back to Products</a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
