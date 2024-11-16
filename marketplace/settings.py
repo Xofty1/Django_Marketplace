@@ -81,11 +81,10 @@ DATABASES = {
     }
 }
 
-# settings.py
-# AUTHENTICATION_BACKENDS = [
-#     'orders.backends.ClientAuthBackend',
-#     'django.contrib.auth.backends.ModelBackend',
-# ]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'users.authentication.EmailAuthBackend'
+]
 
 
 # Password validation
