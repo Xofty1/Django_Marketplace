@@ -1,12 +1,13 @@
 from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.contrib.auth.views import LoginView, PasswordChangeView, \
+    PasswordResetConfirmView
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
 from users.forms import LoginUserForm, RegisterUserForm, ProfileUserForm, \
-    UserPasswordChangeForm
+    UserPasswordChangeForm, UserSetPasswordForm
 
 
 class LoginUser(LoginView):
@@ -43,3 +44,9 @@ class UserPasswordChange(PasswordChangeView):
     form_class = UserPasswordChangeForm
     success_url = reverse_lazy("users:password_change_done")
     template_name = "users/password_change_form.html"
+
+
+class UserPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = "users/password_reset_confirm.html"  # Укажите ваш шаблон
+    form_class = UserSetPasswordForm  # Используйте вашу кастомную форму
+    success_url = reverse_lazy("users:password_reset_complete")

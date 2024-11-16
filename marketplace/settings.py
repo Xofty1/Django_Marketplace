@@ -86,7 +86,7 @@ AUTHENTICATION_BACKENDS = [
     'users.authentication.EmailAuthBackend'
 ]
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -135,3 +135,13 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'home'
 
 LOGIN_URL = 'users:login'
+
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "#####@yandex.ru"
+EMAIL_HOST_PASSWORD = "affhqgfthrnraltxb"
+
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER

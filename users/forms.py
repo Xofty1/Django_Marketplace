@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, \
-    PasswordChangeForm
+    PasswordChangeForm, SetPasswordForm
 
 
 class LoginUserForm(AuthenticationForm):
@@ -31,11 +31,11 @@ class RegisterUserForm(UserCreationForm):
             'last_name': "Фамилия"
         }
 
-    # def clean_email(self):
-    #     email = self.cleaned_data['email']
-    #     if get_user_model().object.filter(email=email).exists():
-    #         raise forms.ValidationError("Тakoй E-mail yжe cyшествует!")
-    #     return email
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if get_user_model().objects.filter(email=email).exists():
+            raise forms.ValidationError("Тakoй E-mail yжe cyшествует!")
+        return email
 
 
 class ProfileUserForm(forms.ModelForm):
@@ -65,3 +65,14 @@ class UserPasswordChangeForm(PasswordChangeForm):
     new_password1 = forms.CharField(label="Новый пароль", widget=forms.PasswordInput())
     new_password2 = forms.CharField(label="Подтверждение пароля",
                                 widget=forms.PasswordInput())
+
+
+class UserSetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        label="Новый пароль",
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Введите новый пароль'}),
+    )
+    new_password2 = forms.CharField(
+        label="Подтверждение нового пароля",
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Подтвердите новый пароль'}),
+    )
