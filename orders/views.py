@@ -17,8 +17,6 @@ def product_detail(request, product_id):
 
     product_images = product.images.all()
 
-    print(product.image.url)
-
     return render(request, 'orders/product_detail.html',
                   {'product': product, 'product_images': product_images})
 
@@ -80,9 +78,9 @@ def add_product(request):
         if form.is_valid():
             product.image = form.cleaned_data["image"]
             product.save()
-            return redirect('../home/')
+            return redirect('catalog:catalog')
     else:
         form = AddProductForm()
 
-    return render(request, 'orders/add_product.html', {'form': form})
+    return render(request, 'catalog/add_product.html', {'form': form})
 
