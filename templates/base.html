@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чёрная Пятница</title>
+    {% load static %}
+    <link type="text/css" href="{% static '/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Chart</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Найти на Chart">
+        </div>
+        <div class="icons">
+            <span><a href="{% url 'users:login' %}">Войти</a></span>
+            <span><a href="{% url 'users:register' %}">Регистрация</a></span>
+            <span><a href="{% url 'catalog:catalog' %}">Товары</a></span>
+        </div>
+    </header>
+{% block content %}
+{% endblock %}
+</body>
+</html>

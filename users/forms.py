@@ -40,6 +40,7 @@ class LoginUserForm(AuthenticationForm):
 
 class RegisterUserForm(UserCreationForm):
     GROUP_CHOICES = [
+        ('Client', 'Клиент'),
         ('Courier', 'Курьер'),
         ('Seller', 'Продавец'),
     ]

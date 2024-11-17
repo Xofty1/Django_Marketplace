@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home - Products</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-<div class="container">
+{% extends 'base.html' %}
+
+{% block content %}
 
     <h2>Register New Client</h2>
     <form method="post">
@@ -17,6 +10,5 @@
             <button type="submit">Register</button>
         </p>
     </form>
-</div>
-</body>
-</html>
+
+{% endblock %}

@@ -52,7 +52,7 @@ def logout_user(request):
     return HttpResponseRedirect(reverse('catalog:catalog'))
 
 def home_view(request):
-    return HttpResponseRedirect(reverse('home'))
+    return HttpResponseRedirect(reverse('catalog:catalog'))
 
 class ProfileUser(LoginRequiredMixin, UpdateView):
     model = get_user_model()
@@ -61,7 +61,7 @@ class ProfileUser(LoginRequiredMixin, UpdateView):
     extra_context = {'title': 'Профиль пользователя'}
 
     def get_success_url(self):
-        return reverse_lazy('users:home')
+        return reverse_lazy('catalog:catalog')
 
     def get_object(self, queryset=None):
         return self.request.user
