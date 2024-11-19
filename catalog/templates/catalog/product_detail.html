@@ -8,7 +8,8 @@
 
         <div class="product-info">
             {% if product.image %}
-            <img src="{{ product.image.url }}" alt="Image for {{ product.name }}"
+            <img src="{{ product.image.url }}"
+                 alt="Image for {{ product.name }}"
                  style="max-width: 300px; margin-bottom: 10px;">
             {% else %}
             {% load static %}
@@ -16,10 +17,14 @@
             {% endif %}
             <p><strong>Description:</strong> {{ product.description }}</p>
             <p><strong>Price:</strong> ${{ product.price }}</p>
+            {% csrf_token %}
+            <form action="{% url 'cart:cart_add' product.id %}"
+                  method="post">
                 {% csrf_token %}
                 <button type="submit">Add to Cart</button>
             </form>
-            <a href="{% url 'catalog:catalog' %}" class="back-link">← Back to Products</a>
+            <a href="{% url 'catalog:catalog' %}" class="back-link">← Back to
+                Products</a>
         </div>
 
     </div>

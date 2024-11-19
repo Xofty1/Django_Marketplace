@@ -5,7 +5,8 @@ from django.contrib.auth.views import PasswordChangeDoneView, \
     PasswordResetCompleteView
 
 from users.views import logout_user, LoginUser, RegisterUser, ProfileUser, \
-    home_view, UserPasswordChange, UserPasswordResetConfirmView
+    home_view, UserPasswordChange, UserPasswordResetConfirmView, \
+    increase_coins, coins_page
 
 app_name = 'users'
 
@@ -33,10 +34,14 @@ urlpatterns = [
          name='password_reset_done'),
 
     path('password-reset/<uidb64>/<token>/',
-            UserPasswordResetConfirmView.as_view(),
+         UserPasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),
     path('password-reset/complete/',
          PasswordResetCompleteView.as_view(
              template_name="users/password_reset_complete.html"),
          name='password_reset_complete'),
+
+    path('increase-coins/', increase_coins, name='increase_coins'),
+    # Ваша страница с монетами
+    path('coins/', coins_page, name='coins_page'),
 ]

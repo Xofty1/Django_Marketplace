@@ -14,9 +14,17 @@
             <input type="text" placeholder="Найти на Chart">
         </div>
         <div class="icons">
-            <span><a href="{% url 'users:login' %}">Войти</a></span>
-            <span><a href="{% url 'users:register' %}">Регистрация</a></span>
+              {% if user.is_authenticated %}
+                <span>Привет, {{ user.username }}</span>  <!-- Имя текущего пользователя -->
+                <span>Монеты: {{ user.coins }} ₽</span> <!-- Количество монет -->
+                <span><a href="{% url 'users:logout' %}">Выйти</a></span>
+            {% else %}
+                <span><a href="{% url 'users:login' %}">Войти</a></span>
+                <span><a href="{% url 'users:register' %}">Регистрация</a></span>
+            {% endif %}
             <span><a href="{% url 'catalog:catalog' %}">Товары</a></span>
+            <span><a href="{% url 'cart:cart' %}">Корзина</a></span>
+            <span><a href="{% url 'users:coins_page' %}">Заработать</a></span>
         </div>
     </header>
 {% block content %}

@@ -26,6 +26,7 @@ def is_seller(user):
 
 @login_required
 @user_passes_test(is_seller)
+@user_passes_test(is_seller)
 def add_product(request):
     if request.method == 'POST':
         form = AddProductForm(request.POST, request.FILES)

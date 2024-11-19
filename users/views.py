@@ -1,10 +1,13 @@
+from django.contrib import messages
 from django.contrib.auth import logout, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.views import LoginView, PasswordChangeView, \
     PasswordResetConfirmView
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
@@ -18,11 +21,8 @@ class LoginUser(LoginView):
     template_name = 'users/login.html'
     extra_context = {'title': 'Авторизация'}
 
-# class RegisterUser(CreateView):
-#     form_class = RegisterUserForm
-#     template_name = 'users/register.html'
-#     extra_context = {'title': 'Регистрация'}
-#     success_url = reverse_lazy('users:login')
+    def get_success_url(self):
+        return reverse_lazy('catalog:catalog')
 
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
@@ -94,3 +94,25 @@ def create_groups():
     # order_ct = ContentType.objects.get_for_model(Order)
     # view_order_permission = Permission.objects.get(codename='view_order', content_type=order_ct)
     # courier_group.permissions.add(view_order_permission)
+
+
+@login_required
+def increase_coins(request):
+    user = request.user
+    increase_amount = 10  # Увеличиваем на 10 монет
+
+    # Увеличиваем количество монет
+    user.coins += increase_amount
+    user.save()
+
+    # Добавляем сообщение об успехе
+    messages.success(request, f'Вы получили {increase_amount} монет!')
+    return render(request, 'users/coins_page.html', {'user': user})
+
+
+@login_required
+def coins_page(request):
+    # Получаем текущего пользователя
+    user = request.user
+    # Передаем информацию о монетах в контекст
+    return render(request, 'users/coins_page.html', {'user': user})

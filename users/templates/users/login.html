@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home - Products</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-<div class="container">
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
 
     <h2>Login New Client</h2>
     <form method="post">
@@ -19,5 +14,5 @@
     </form>
     <a href="{% url 'users:password_reset' %}">Забыли пароль?</a>
 </div>
-</body>
-</html>
+
+{% endblock %}
