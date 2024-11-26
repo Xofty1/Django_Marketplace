@@ -20,3 +20,22 @@
     </ul>
 </body>
 </html>
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>Login New Client</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p>
+            <button type="submit">Log In</button>
+        </p>
+    </form>
+    <a href="{% url 'users:password_reset' %}">Забыли пароль?</a>
+</div>
+
+{% endblock %}

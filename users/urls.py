@@ -42,6 +42,5 @@ urlpatterns = [
          name='password_reset_complete'),
 
     path('increase-coins/', increase_coins, name='increase_coins'),
-    # Ваша страница с монетами
     path('coins/', coins_page, name='coins_page'),
 ]

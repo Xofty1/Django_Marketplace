@@ -29,6 +29,16 @@ def cart_add(request, product_id):
             messages.error(request, 'Количество должно быть больше 0.')
             return redirect('catalog:product_detail', product_id=product.id)
 
+        # Проверяем, достаточно ли товара на складе
+        total_quantity = cart_item.quantity + quantity if not created else quantity
+        if total_quantity > product.count:
+            messages.error(
+                request,
+                f'Недостаточно товара "{product.name}" на складе. Доступно: {product.count}.'
+            )
+            return redirect('catalog:product_detail', product_id=product.id)
+
+        # Обновляем количество в корзине
         if created:  # Если товар только добавляется
             cart_item.quantity = quantity
         else:  # Если товар уже есть, увеличиваем его количество
@@ -39,7 +49,6 @@ def cart_add(request, product_id):
         return redirect('cart:cart')
 
     return redirect('catalog:product_detail', product_id=product.id)
-
 
 @login_required
 def cart_remove(request, product_id):

@@ -45,9 +45,8 @@ class Order(models.Model):
         return f"Заказ № {self.pk} | Покупатель {self.user.first_name} {self.user.last_name}"
 
     def calculate_total_cost(self):
-        """Вычисление общей стоимости заказа на основе товаров."""
-        total = sum(item.product.price for item in
-                    self.orderitem_set.all())  # Получаем все товары в заказе
+        total = sum(item.product.price * item.quantity for item in
+                    self.orderitem_set.all())
         self.total_cost = total
         self.save()
         return self.total_cost
@@ -76,3 +75,20 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"Товар {self.product.name} | Заказ № {self.order.pk}"
+
+class CourierOrder(models.Model):
+    courier = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="booked_orders",
+        verbose_name="Курьер"
+    )
+    order = models.OneToOneField(
+        'Order', on_delete=models.CASCADE, related_name="courier_booking",
+        verbose_name="Заказ"
+    )
+
+    class Meta:
+        verbose_name = "Бронирование"
+        verbose_name_plural = "Бронирования"
+
+    def __str__(self):
+        return f"Курьер: {self.courier.username} - Заказ #{self.order.id}"

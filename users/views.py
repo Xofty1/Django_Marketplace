@@ -7,11 +7,12 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, \
     PasswordResetConfirmView
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
 from catalog.models import Product
+from order.models import Order
 from users.forms import LoginUserForm, RegisterUserForm, ProfileUserForm, \
     UserPasswordChangeForm, UserSetPasswordForm
 
@@ -90,10 +91,10 @@ def create_groups():
     add_product_permission = Permission.objects.get(codename='add_product', content_type=product_ct)
     seller_group.permissions.add(add_product_permission)
 
-    # # Добавляем права для группы Courier
-    # order_ct = ContentType.objects.get_for_model(Order)
-    # view_order_permission = Permission.objects.get(codename='view_order', content_type=order_ct)
-    # courier_group.permissions.add(view_order_permission)
+    # Добавляем права для группы Courier
+    order_ct = ContentType.objects.get_for_model(Order)
+    view_order_permission = Permission.objects.get(codename='view_order', content_type=order_ct)
+    courier_group.permissions.add(view_order_permission)
 
 
 @login_required
@@ -112,7 +113,5 @@ def increase_coins(request):
 
 @login_required
 def coins_page(request):
-    # Получаем текущего пользователя
     user = request.user
-    # Передаем информацию о монетах в контекст
     return render(request, 'users/coins_page.html', {'user': user})

@@ -1,54 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Монеты</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .container {
-            text-align: center;
-            margin-top: 50px;
-        }
-        .btn {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #007bff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-        .coins {
-            font-size: 1.5em;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Ваши монеты</h1>
+{% extends 'base.html' %}
 
-        <p class="coins">У вас сейчас: {{ user.coins }} монет</p>
+{% block content %}
 
-        <form action="{% url 'users:increase_coins' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn">Получить 10 монет</button>
-        </form>
+<div class="container">
+    <h1>Ваши монеты</h1>
+    {% if message %}
+    <p class="message">{{ message }}</p>
+    {% endif %}
+    <p class="coins">У вас сейчас: {{ user.coins }} монет</p>
 
-        {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-        </div>
-        {% endif %}
+
+    <form action="{% url 'users:increase_coins' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn">Получить 10 монет</button>
+    </form>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
     </div>
-</body>
-</html>
+    {% endif %}
+</div>
+
+{% endblock %}
