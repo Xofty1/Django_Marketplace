@@ -3,8 +3,11 @@
 {% block content %}
 
 <div class="container">
-
-    <h2>Изменить данные</h2>
+    {% if request.theme == 'dark' %}
+    <h2>Изменить данные по темному</h2>
+    {% elif request.theme == 'light' %}
+    <h2>Изменить данные по светлому</h2>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

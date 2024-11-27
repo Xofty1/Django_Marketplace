@@ -6,7 +6,7 @@ from django.contrib.auth.views import PasswordChangeDoneView, \
 
 from users.views import logout_user, LoginUser, RegisterUser, ProfileUser, \
     home_view, UserPasswordChange, UserPasswordResetConfirmView, \
-    increase_coins, coins_page
+    increase_coins, coins_page, toggle_theme
 
 app_name = 'users'
 
@@ -43,4 +43,6 @@ urlpatterns = [
 
     path('increase-coins/', increase_coins, name='increase_coins'),
     path('coins/', coins_page, name='coins_page'),
+
+    path('toggle-theme/', toggle_theme, name='toggle_theme')
 ]

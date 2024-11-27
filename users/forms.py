@@ -51,12 +51,14 @@ class RegisterUserForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email', 'first_name', 'last_name', 'password1',
+        fields = ['username', 'email', 'first_name', 'address', 'phone', 'last_name', 'password1',
                   'password2']
         labels = {
             'email': 'E-mail',
             'first_name': "Имя",
-            'last_name': "Фамилия"
+            'last_name': "Фамилия",
+            'address': "Адрес",
+            'phone': "Телефон"
         }
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -73,12 +75,13 @@ class ProfileUserForm(forms.ModelForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email', 'first_name', 'last_name', 'address']
+        fields = ['username', 'email', 'first_name', 'last_name', 'address', 'phone']
         labels = {
             'email': 'E-mail',
             'first_name': "Имя",
             'last_name': "Фамилия",
-            'address': 'Адрес'
+            'address': 'Адрес',
+            'phone': "Телефон"
         }
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-input'}),

@@ -7,7 +7,7 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, \
     PasswordResetConfirmView
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
@@ -115,3 +115,10 @@ def increase_coins(request):
 def coins_page(request):
     user = request.user
     return render(request, 'users/coins_page.html', {'user': user})
+
+def toggle_theme(request):
+    # Проверяем текущую тему и переключаем её
+    current_theme = request.session.get('theme', 'light')
+    new_theme = 'dark' if current_theme == 'light' else 'light'
+    request.session['theme'] = new_theme
+    return redirect(request.META.get('HTTP_REFERER', '/users/profile'))

@@ -1,12 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Оформление заказа</h1>
+<h1>Оформление заказа</h1>
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ order_form.as_p }}
-        <button type="submit">Оформить заказ</button>
-    </form>
+<form method="POST">
+    {% csrf_token %}
+    {{ order_form.as_p }}
+    <button type="submit">Оформить заказ</button>
+</form>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const requiresDelivery = document.getElementById('id_requires_delivery');
+        const deliveryAddress = document.getElementById('id_delivery_address');
 
+        // Адрес пользователя для автоматического заполнения
+        const userAddress = "{{ user.address|escapejs }}";
+
+        // Функция управления полем доставки
+        function toggleDeliveryAddress() {
+            if (requiresDelivery.checked) {
+                deliveryAddress.value = userAddress; // Устанавливаем адрес пользователя
+                deliveryAddress.readOnly = true; // Блокируем поле
+            } else {
+                deliveryAddress.value = ''; // Очищаем поле
+                deliveryAddress.readOnly = false; // Разблокируем поле
+            }
+        }
+
+        // Инициализация состояния при загрузке
+        toggleDeliveryAddress();
+
+        // Событие изменения
+        requiresDelivery.addEventListener('change', toggleDeliveryAddress);
+    });
+
+</script>
 {% endblock %}

@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Детали заказа</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
     <h1>Детали заказа № {{ order.id }}</h1>
 
     <p>Дата создания: {{ order.created_timestamp }}</p>
@@ -18,24 +16,6 @@
             <li>{{ item.product.name }} - {{ item.quantity }} x {{ item.product.price }} ₽</li>
         {% endfor %}
     </ul>
-</body>
-</html>
-
-{% extends 'base.html' %}
-
-{% block content %}
-
-<div class="container">
-
-    <h2>Login New Client</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <p>
-            <button type="submit">Log In</button>
-        </p>
-    </form>
-    <a href="{% url 'users:password_reset' %}">Забыли пароль?</a>
 </div>
 
 {% endblock %}

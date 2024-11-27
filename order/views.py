@@ -26,7 +26,9 @@ def order_create(request):
     # Если запрос POST, то создаем заказ
     if request.method == 'POST':
         # Создаем заказ на основе формы
-        order_form = OrderForm(request.POST)
+        # order_form = OrderForm(request.POST)
+        order_form = OrderForm(request.POST, user=request.user)
+
         if order_form.is_valid():
             # Создаем заказ
             order = order_form.save(commit=False)
@@ -59,9 +61,11 @@ def order_create(request):
                         product.count -= cart_item.quantity
                         product.save()
                     else:
+                        request.user.coins += order.total_cost
                         raise ValueError(
                             f"Недостаточно товара {product.name} на складе.")
                 except Product.DoesNotExist:
+                    request.user.coins += order.total_cost
                     raise ValueError(
                         f"Продукт с ID {cart_item.product.id} не найден.")
             # Очистить корзину после оформления
