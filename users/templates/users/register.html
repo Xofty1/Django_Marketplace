@@ -1,15 +1,28 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
-
+<div class="container">
     <h2>Register New Client</h2>
-    <form method="post">
+    <form method="post" class="registration-form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <p>
-            <button type="submit">Register</button>
-        </p>
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <div class="form-help">{{ field.help_text }}</div>
+                {% endif %}
+                {% if field.errors %}
+                    <div class="form-error">
+                        {% for error in field.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit">Register</button>
     </form>
-
+</div>
 {% endblock %}
-

@@ -1,33 +1,57 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Чёрная Пятница</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chart</title>
     {% load static %}
-    <link type="text/css" href="{% static '/css/styles.css' %}" rel="stylesheet" />
-</head>
-<body>
+    {% load user_tags %}
+
+
+    <link
+      type="text/css"
+      href="{% static '/css/styles.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      type="text/css"
+      href="{% static '/css/styles_product_details.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      type="text/css"
+      href="{% static '/css/styles_form.css' %}"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <header class="header">
-        <div class="logo">Chart</div>
-        <div class="search-bar">
-            <input type="text" placeholder="Найти на Chart">
-        </div>
-        <div class="icons">
-              {% if user.is_authenticated %}
-                <span>Привет, {{ user.username }}</span>  <!-- Имя текущего пользователя -->
-                <span>Монеты: {{ user.coins }} ₽</span> <!-- Количество монет -->
-                <span><a href="{% url 'users:logout' %}">Выйти</a></span>
-            {% else %}
-                <span><a href="{% url 'users:login' %}">Войти</a></span>
-                <span><a href="{% url 'users:register' %}">Регистрация</a></span>
-            {% endif %}
-            <span><a href="{% url 'catalog:catalog' %}">Товары</a></span>
-            <span><a href="{% url 'cart:cart' %}">Корзина</a></span>
-            <span><a href="{% url 'users:coins_page' %}">Заработать</a></span>
-        </div>
+      <div class="logo"><a href="{% url 'catalog:catalog' %}">Chart</a></div>
+      <div class="search-bar">
+        <input type="text" placeholder="Найти на Chart" />
+      </div>
+      <div class="icons">
+        {% if user.is_authenticated %}
+        <span>{{ user.username }}</span>
+        <span>Монеты: {{ user.coins }} ₽</span>
+        <span><a href="{% url 'users:logout' %}">Выйти</a></span>
+
+        <!-- Проверка групп пользователя -->
+        {% if user|in_group:"Courier" %}
+        <span><a href="{% url 'order:order_list_for_courier' %}">Заказы</a></span>
+        {% elif user|in_group:"Seller" %}
+        <span><a href="{% url 'catalog:seller_products' %}">Мои продукты</a></span>
+        {% endif %}
+
+        {% else %}
+        <span><a href="{% url 'users:login' %}">Войти</a></span>
+        <span><a href="{% url 'users:register' %}">Регистрация</a></span>
+        {% endif %}
+        <span><a href="{% url 'catalog:catalog' %}">Товары</a></span>
+        <span><a href="{% url 'cart:cart' %}">Корзина</a></span>
+        <span><a href="{% url 'users:coins_page' %}">Заработать</a></span>
+      </div>
     </header>
-{% block content %}
-{% endblock %}
-</body>
+    {% block content %} {% endblock %}
+  </body>
 </html>

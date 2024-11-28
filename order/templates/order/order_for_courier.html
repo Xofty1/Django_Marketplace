@@ -37,10 +37,11 @@
         </td>
         <td>
             {% if not order.courier_booking and order.requires_delivery %}
-            <form method="post" action="{% url 'order:book_order' order.id %}">
-                {% csrf_token %}
-                <button type="submit">Забронировать</button>
-            </form>
+<!--            <form method="post" action="{% url 'order:book_order' order.id %}">-->
+<!--                {% csrf_token %}-->
+<!--                <button type="submit">Забронировать</button>-->
+<!--            </form>-->
+            <a href="{% url 'order:book_order' order.id %}">Забронировать</a>
             {% elif not order.requires_delivery %}
             <em>Не требует доставки</em>
             {% else %}

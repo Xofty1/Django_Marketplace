@@ -1,23 +1,26 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="container">
-    <h1>Our Products</h1>
-    <div class="product-grid">
-        {% for product in products %}
-        <a href="{% url 'catalog:product_detail' product.id %}"
-           class="product-card-link">
-            <div class="product-card">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}"
-                     class="product-image">
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.description|truncatewords:10 }}</p>
-                <p class="price">${{ product.price }}</p>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
+  <h1>Our Products</h1>
+  <div class="product-grid">
+    {% for product in products %}
+    <a
+      href="{% url 'catalog:product_detail' product.id %}"
+      class="product-card-link"
+    >
+      <div class="product-card">
+        <img
+          src="{{ product.image.url }}"
+          alt="{{ product.name }}"
+          class="product-image"
+        />
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description|truncatewords:10 }}</p>
+        <p class="price">${{ product.price }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock %}

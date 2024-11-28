@@ -43,6 +43,54 @@ def add_product(request):
 
     return render(request, 'catalog/add_product.html', {'form': form})
 
+@login_required
+@user_passes_test(is_seller)
+def seller_products(request):
+    # Получаем продукты, добавленные текущим пользователем
+    products = Product.objects.filter(seller=request.user)
+
+    return render(request, 'catalog/seller_products.html', {'products': products})
+
+
+
+
+@login_required
+@user_passes_test(is_seller)
+def update_product(request, pk):
+    product = get_object_or_404(Product, pk=pk, seller=request.user)
+
+    if request.method == 'POST':
+        form = AddProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('catalog:seller_products')
+    else:
+        form = AddProductForm(instance=product)
+
+    return render(request, 'catalog/update_product.html', {'form': form, 'product': product})
+
+
+@login_required
+@user_passes_test(is_seller)
+def delete_product(request, pk):
+    product = get_object_or_404(Product, pk=pk, seller=request.user)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('catalog:seller_products')
+    return render(request, 'catalog/delete_product.html', {'product': product})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @login_required
 @user_passes_test(is_seller)
