@@ -44,5 +44,5 @@ urlpatterns = [
     path('increase-coins/', increase_coins, name='increase_coins'),
     path('coins/', coins_page, name='coins_page'),
 
-    path('toggle-theme/', toggle_theme, name='toggle_theme')
+    path('toggle-theme/', toggle_theme, name='toggle_theme'),
 ]

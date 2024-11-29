@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import path, include
+from django.views.generic import RedirectView
 
 from marketplace import settings
 
@@ -26,7 +28,9 @@ urlpatterns = [
     path('catalog/', include('catalog.urls', namespace="catalog")),
     path('cart/', include('cart.urls', namespace="cart")),
     path('order/', include('order.urls', namespace="order")),
+    path('', RedirectView.as_view(pattern_name='catalog:catalog', permanent=False)),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

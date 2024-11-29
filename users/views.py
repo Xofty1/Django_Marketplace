@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.views import LoginView, PasswordChangeView, \
     PasswordResetConfirmView
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView
@@ -122,3 +122,5 @@ def toggle_theme(request):
     new_theme = 'dark' if current_theme == 'light' else 'light'
     request.session['theme'] = new_theme
     return redirect(request.META.get('HTTP_REFERER', '/users/profile'))
+
+

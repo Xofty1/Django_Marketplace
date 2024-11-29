@@ -5,29 +5,37 @@
     <h1>My Products</h1>
 
     <!-- Кнопка "Добавить продукт" -->
-    <a href="{% url 'catalog:add_product' %}" class="btn btn-primary add-product-btn">Добавить продукт</a>
-
+    <a href="{% url 'catalog:add_product' %}"
+       class="btn btn-primary add-product-btn">Добавить продукт</a>
+    <form method="post" action="{% url 'catalog:add_random_product' %}">
+        {% csrf_token %}
+        <button type="submit">Сгенерировать продукты</button>
+    </form>
     {% if products %}
-        <div class="product-grid">
-            {% for product in products %}
-            <div class="product-card">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
-                <h3>{{ product.name }}</h3>
-                <p class="price">${{ product.price }}</p>
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                 class="product-image">
+            <h3>{{ product.name }}</h3>
+            <p class="price">${{ product.price }}</p>
 
-                <!-- Кнопки "Изменить" и "Удалить" -->
-                <div class="product-actions">
-                    <a href="{% url 'catalog:update_product' product.id %}" class="btn btn-warning">Изменить</a>
-                    <form action="{% url 'catalog:delete_product' product.id %}" method="post" style="display: inline;">
-                        {% csrf_token %}
-                        <a href="{% url 'catalog:delete_product' product.id %}" class="btn btn-warning">Удалить</a>
-                    </form>
-                </div>
+            <!-- Кнопки "Изменить" и "Удалить" -->
+            <div class="product-actions">
+                <a href="{% url 'catalog:update_product' product.id %}"
+                   class="btn btn-warning">Изменить</a>
+                <form action="{% url 'catalog:delete_product' product.id %}"
+                      method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <a href="{% url 'catalog:delete_product' product.id %}"
+                       class="btn btn-warning">Удалить</a>
+                </form>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+    </div>
     {% else %}
-        <p>You have not added any products yet.</p>
+    <p>You have not added any products yet.</p>
     {% endif %}
 </div>
 

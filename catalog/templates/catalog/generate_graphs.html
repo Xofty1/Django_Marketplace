@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %}
+    <h1>Генерация диаграмм</h1>
+    <form method="post" action="{% url 'catalog:generate_graphs' %}">
+        {% csrf_token %}
+        <button type="submit">Сгенерировать диаграммы</button>
+    </form>
+
+    {% if graphs %}
+        <h2>Результаты:</h2>
+        <img src="/media/graphs/category_counts.png" alt="Количество продуктов по категориям">
+        <img src="/media/graphs/price_distribution.png" alt="Распределение цен">
+        <img src="/media/graphs/seller_distribution.png" alt="Количество продуктов по продавцам">
+    {% endif %}
+
+{% endblock %}

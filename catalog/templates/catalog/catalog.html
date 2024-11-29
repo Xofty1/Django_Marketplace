@@ -2,7 +2,9 @@
 
 <div class="container">
   <h1>Our Products</h1>
+  <a class="theme-text" href="{% url 'catalog:generate_graphs' %}">Перейти к генерации графиков</a>
   <div class="product-grid">
+
     {% for product in products %}
     <a
       href="{% url 'catalog:product_detail' product.id %}"

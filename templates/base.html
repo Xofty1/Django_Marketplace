@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" {% if request.theme == 'dark' %}data-theme="dark"{% else %}data-theme="light"{% endif %}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,8 +32,8 @@
       </div>
       <div class="icons">
         {% if user.is_authenticated %}
-        <span>{{ user.username }}</span>
-        <span>Монеты: {{ user.coins }} ₽</span>
+        <span><a href="{% url 'users:profile' %}">{{ user.username }}</a></span>
+        <span><a href="{% url 'users:coins_page' %}">Монеты: {{ user.coins }} ₽</a></span>
         <span><a href="{% url 'users:logout' %}">Выйти</a></span>
 
         <!-- Проверка групп пользователя -->
@@ -49,7 +49,7 @@
         {% endif %}
         <span><a href="{% url 'catalog:catalog' %}">Товары</a></span>
         <span><a href="{% url 'cart:cart' %}">Корзина</a></span>
-        <span><a href="{% url 'users:coins_page' %}">Заработать</a></span>
+
       </div>
     </header>
     {% block content %} {% endblock %}
