@@ -1,48 +1,160 @@
-body {
-  font-family: Arial, sans-serif;
+/* Универсальный сброс стилей браузера */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
+
+html {
+  font-size: 100%; /* Устанавливаем базовый размер шрифта */
+  line-height: 1.5; /* Оптимальное расстояние между строками */
+  -webkit-text-size-adjust: 100%; /* Отключаем изменение размера текста на мобильных устройствах */
+  -ms-text-size-adjust: 100%; /* Для старых браузеров */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+  line-height: inherit;
+}
+
+main {
+  display: block; /* Для корректной поддержки в старых браузерах */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+p,
+ul,
+ol,
+blockquote {
+  margin: 0; /* Убираем отступы */
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none; /* Убираем маркеры у списков */
+}
+
+a {
+  text-decoration: none; /* Убираем подчеркивание у ссылок */
+  color: inherit; /* Наследуем цвет */
+}
+
+img,
+video,
+iframe {
+  max-width: 100%; /* Медиа-элементы не вылезают за рамки контейнера */
+  height: auto;
+  display: block;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit; /* Наследуем шрифт */
+  color: inherit; /* Наследуем цвет */
+  border: none; /* Убираем стандартные рамки */
+  background: none; /* Убираем стандартные стили */
+  outline: none; /* Убираем обводку при фокусе */
+}
+
+table {
+  border-collapse: collapse; /* Убираем промежутки между ячейками */
+  border-spacing: 0;
+  width: 100%;
+}
+
 :root {
-    /* Светлая тема по умолчанию */
-    --background-color: #fff;
-    --text-color: #000;
-    --header-footer-background: #f1f1f1;
-    --button-background: #008cba;
-    --button-text-color: #fff;
+  /* Светлая тема по умолчанию */
+  --background-color: #faf9f6;
+  --text-color: #3c3c3c;
+  --header-footer-background: #a3d9a5;
+  --button-background: #008cba;
+  --button-text-color: #fff;
+  --accent-color: #a3d9a5;
+  --secondary-accent: #ffd8c2;
 }
 
 [data-theme="dark"] {
-    --background-color: #333;
-    --text-color: #fff;
-    --header-footer-background: #444;
-    --button-background: #444;
-    --button-text-color: #fff;
+  --background-color: #2a2d34;
+  --text-color: #e1e1e1;
+  --header-footer-background: #917fb3;
+  --button-background: #444;
+  --button-text-color: #fff;
+  --accent-color: #917fb3;
+  --secondary-accent: #f4a259;
 }
 
 body {
-    background-color: var(--background-color);
-    color: var(--text-color);
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
-header, footer {
-    background-color: var(--header-footer-background);
+header,
+footer {
+  background-color: var(--header-footer-background);
 }
 
+/* Базовый стиль для кнопок */
 button {
-    background-color: var(--button-background);
-    color: var(--button-text-color);
+  background-color: var(--accent-color); /* Фон кнопки */
+  color: #fff; /* Цвет текста */
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Плавный переход для всех изменений */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень */
 }
 
-.theme-text{
-color: var(--text-color)
+/* Эффект при наведении */
+button:hover {
+  background-color: darken(
+    var(--accent-color),
+    10%
+  ); /* Более темный фон при наведении */
+  transform: scale(1.05); /* Немного увеличиваем кнопку при наведении */
+  box-shadow: 0 6px 12px var(--secondary-accent); /* Более выраженная тень */
+  opacity: 0.9; /* Легкое уменьшение непрозрачности */
 }
 
+/* Эффект при нажатии */
+button:active {
+  transform: scale(0.98); /* Кнопка немного сжимается при нажатии */
+  opacity: 1; /* Возвращаем нормальную непрозрачность */
+}
+
+/* Фокусировка на кнопке (для удобства использования клавиатурой) */
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--secondary-accent); /* Синий фокус */
+}
+
+.theme-text {
+  color: var(--text-color);
+}
 
 a {
   text-decoration: none;
   color: #fff;
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* Стили для заголовка */
@@ -50,15 +162,45 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #000;
   color: #fff;
   padding: 10px 20px;
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 42px;
   font-weight: bold;
   color: #fff;
+}
+
+.logo a {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.menu_item {
+  display: flex;
+  flex-direction: column; /* Расположение элементов в столбик */
+  align-items: center; /* Центровка по горизонтали */
+  text-align: center;
+  padding: 6px; /* Отступы вокруг */
+  transition: color 0.3s ease; /* Анимация цвета при наведении */
+}
+
+.menu_icon {
+  width: 28px; /* Ширина иконки */
+  height: 28px; /* Высота иконки */
+  margin-bottom: 6px; /* Отступ между картинкой и текстом */
+}
+
+.menu_text {
+  color: #555; /* Базовый цвет текста */
+  font-size: 14px; /* Размер текста */
+  text-decoration: none; /* Убираем подчеркивание */
+  transition: color 0.3s ease; /* Анимация цвета */
+}
+
+.menu_item:hover .menu_text {
+  color: #fff; /* Цвет текста при наведении */
 }
 
 .search-bar input {
@@ -79,7 +221,7 @@ a {
 }
 
 .icons a {
-  color: #fff;
+  color: #faf9f6;
   font-size: 14px;
   font-weight: bold;
 }
@@ -100,79 +242,35 @@ a {
   }
 }
 
-/* Сетка продуктов */
-/* Сетка продуктов */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  justify-content: center; /* Центрирование сетки */
-  padding: 20px; /* Равномерные отступы */
-  box-sizing: border-box; /* Включение отступов в ширину контейнера */
-}
-
-/* Контейнер страницы */
-
-/* Карточка продукта */
-.product-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Растягивает элементы, чтобы заполнить карточку */
-  align-items: center;
-  width: 100%; /* Адаптация к сетке */
-  height: 250px; /* Фиксированная высота карточки */
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  padding: 16px;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-/* Картинка продукта */
-.product-image {
-  width: 100%;
-  max-height: 150px; /* Ограничение высоты изображения */
-  object-fit: cover; /* Изображение обрезается, чтобы соответствовать карточке */
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-
-/* Название продукта */
-.product-card h3 {
-  font-size: 1.2rem;
-  margin: 10px 0;
-}
-
-/* Описание продукта */
-.product-card p {
-  font-size: 0.9rem;
-  color: #666;
-  margin: 5px 0;
-}
-
-/* Цена продукта */
-.product-card .price {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #333;
-}
-
-/* Ссылка на карточку */
-.product-card-link {
-  text-decoration: none;
-  color: inherit;
-  margin: 20px;
-}
-
 .container {
-  max-width: 1200px; /* Максимальная ширина */
+  max-width: 90%; /* Максимальная ширина */
   margin: 0 auto; /* Центрирование контейнера */
   padding: 0 20px; /* Равномерные отступы слева и справа */
   box-sizing: border-box; /* Включение отступов в ширину контейнера */
 }
 
+.page_name {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  font-size: 42px;
+  color: var(--text-color);
+  margin: 25px 0;
+  font-weight: 700;
+}
 
+h3 {
+  font-size: 17px;
+}
 
+.theme-text {
+  text-decoration: none;
+  transition: color 0.3s ease;
+  color: var(--text-color);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
 
+.theme-text:hover {
+  color: var(--accent-color);
+}

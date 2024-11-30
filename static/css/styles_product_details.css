@@ -1,78 +1,135 @@
-/* Блок детальной информации о продукте */
-.product-detail {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  margin-top: 20px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+body {
+  font-family: "Nunito", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
-/* Блок информации о продукте */
-.product-info {
-  max-width: 600px;
-}
-
-/* Изображение продукта */
-.product-info img {
-  display: block;
+.container {
   max-width: 100%;
+  margin: 0 auto;
+}
+
+.sidebar {
+  background-color: var(--header-footer-background);
+  padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 }
 
-/* Описание продукта */
-.product-info p {
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 15px;
+.sidebar h2,
+.sidebar h3 {
+  color: var(--text-color);
+  margin-bottom: 10px;
 }
 
-.product-info strong {
-  font-weight: bold;
-  color: #555;
+.filter-form input[type="checkbox"],
+.filter-form input[type="number"] {
+  margin-right: 8px;
 }
 
-/* Цена продукта */
-.product-info p strong {
-  font-size: 18px;
-  color: #0078d7;
-}
-
-/* Кнопка добавления в корзину */
-.product-info form button {
-  display: inline-block;
-  background-color: #0078d7;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px 20px;
+/* .filter-button {
+  background-color: var(--button-background);
+  color: var(--button-text-color);
   border: none;
+  padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease;
+} */
+
+.filter-button:hover {
+  background-color: var(--text-color);
+  color: var(--background-color);
 }
 
-.product-info form button:hover {
-  background-color: #005bb5;
-  transform: scale(1.05);
+.main-content {
+  display: flex;
+  align-items: flex-start; /* Содержимое выравнивается по началу */
 }
 
-/* Ссылка "Back to Products" */
-.back-link {
-  display: inline-block;
-  margin-top: 15px;
-  text-decoration: none;
-  color: #0078d7;
-  font-size: 14px;
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 0 15px;
+  flex: 1;
+}
+
+.product-card {
+  background-color: var(--header-footer-background);
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+  padding: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.product-card h3 {
+  margin: 10px 0;
+  color: var(--text-color);
+}
+
+.product-card p {
+  margin: 5px 0;
+  color: var(--text-color);
+}
+
+.product-card .price {
   font-weight: bold;
-  transition: color 0.3s ease;
+  color: var(--text-color);
 }
 
-.back-link:hover {
-  color: #005bb5;
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.pagination a {
+  color: var(--button-background);
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid var(--button-background);
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination a:hover {
+  background-color: var(--button-background);
+  color: var(--button-text-color);
+}
+
+.pagination .current {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.filter-section {
+  display: flex;
+  flex-direction: column; /* Располагаем элементы в столбец */
+  gap: 10px; /* Добавляем промежуток между элементами */
+}
+
+#max_price,
+#min_price {
+  margin-left: 6px;
+}
+
+.label_price {
+  width: 30px;
+  display: inline-flex;
 }
