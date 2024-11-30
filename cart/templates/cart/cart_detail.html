@@ -34,6 +34,11 @@
                 <input type="hidden" name="action" value="increase">
                 <button type="submit" class="btn">+</button>
             </form>
+            <form action="{% url 'cart:cart_delete' item.product.id %}"
+                  method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn">Удалить</button>
+            </form>
         </td>
     </tr>
     {% endfor %}
@@ -44,13 +49,13 @@
 <p class="total">Итого: {{ total_price|floatformat:2 }} ₽</p>
 
 <div class="actions">
-    <a href="{% url 'catalog:catalog' %}" class="btn">Продолжить покупки</a>
+    <a href="{% url 'catalog:catalog' %}" class="btn theme-text" >Продолжить покупки</a>
 </div>
 <div class="actions">
-    <a href="{% url 'order:order_create' %}" class="btn">Оформить заказ</a>
+    <a href="{% url 'order:order_create' %}" class="btn theme-text">Оформить заказ</a>
 </div>
 {% else %}
-<p>Ваша корзина пуста. <a href="{% url 'catalog:catalog' %}">Вернуться к
+<p>Ваша корзина пуста. <a href="{% url 'catalog:catalog' %}" class="theme-text">Вернуться к
     покупкам</a>.</p>
 {% endif %}
 {% endblock %}

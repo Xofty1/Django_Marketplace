@@ -16,7 +16,8 @@ from .models import Product, Cart
 @login_required
 def cart_add(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    cart_item, created = Cart.objects.get_or_create(user=request.user, product=product)
+    cart_item, created = Cart.objects.get_or_create(user=request.user,
+                                                    product=product)
 
     if request.method == 'POST':
         try:
@@ -50,9 +51,11 @@ def cart_add(request, product_id):
 
     return redirect('catalog:product_detail', product_id=product.id)
 
+
 @login_required
 def cart_remove(request, product_id):
-    cart_item = Cart.objects.filter(user=request.user, product_id=product_id).first()
+    cart_item = Cart.objects.filter(user=request.user,
+                                    product_id=product_id).first()
     if cart_item:
         cart_item.delete()
         messages.success(request, 'Товар удалён из корзины.')
@@ -67,6 +70,7 @@ def cart(request):
     return render(request, 'cart/cart_detail.html',
                   {'cart_items': cart_items})
 
+
 @login_required
 def cart_update(request, product_id):
     product = get_object_or_404(Product, id=product_id)
@@ -76,10 +80,11 @@ def cart_update(request, product_id):
         action = request.POST.get('action')
 
         if action == 'increase':
-            if product.count >= cart_item.quantity+1:
+            if product.count >= cart_item.quantity + 1:
                 cart_item.quantity += 1
                 cart_item.save()
-                messages.success(request, f'Количество товара "{product.name}" увеличено.')
+                messages.success(request,
+                                 f'Количество товара "{product.name}" увеличено.')
             else:
                 messages.error(request,
                                f'Недостаточно товара "{product.name}" в наличии. Доступно: {product.count}.')
@@ -87,9 +92,21 @@ def cart_update(request, product_id):
             if cart_item.quantity > 1:
                 cart_item.quantity -= 1
                 cart_item.save()
-                messages.success(request, f'Количество товара "{product.name}" уменьшено.')
+                messages.success(request,
+                                 f'Количество товара "{product.name}" уменьшено.')
             else:
                 cart_item.delete()
-                messages.success(request, f'Товар "{product.name}" удалён из корзины.')
+                messages.success(request,
+                                 f'Товар "{product.name}" удалён из корзины.')
 
+    return redirect('cart:cart')  # Возвращаемся на страницу корзины
+
+
+@login_required
+def cart_delete(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    cart_item = get_object_or_404(Cart, user=request.user, product=product)
+
+    if request.method == 'POST':
+        cart_item.delete()
     return redirect('cart:cart')  # Возвращаемся на страницу корзины

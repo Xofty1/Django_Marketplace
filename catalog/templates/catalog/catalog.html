@@ -1,27 +1,119 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 
 <div class="container">
-  <h1>Our Products</h1>
-  <a class="theme-text" href="{% url 'catalog:generate_graphs' %}">Перейти к генерации графиков</a>
-  <div class="product-grid">
+  {% if not seller_request %}
+    <h1>Продукты</h1>
 
-    {% for product in products %}
-    <a
-      href="{% url 'catalog:product_detail' product.id %}"
-      class="product-card-link"
-    >
-      <div class="product-card">
-        <img
-          src="{{ product.image.url }}"
-          alt="{{ product.name }}"
-          class="product-image"
-        />
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.description|truncatewords:10 }}</p>
-        <p class="price">${{ product.price }}</p>
-      </div>
-    </a>
-    {% endfor %}
+
+  {% else %}
+    <h1>Мои продукты</h1>
+  <a class="theme-text" href="{% url 'catalog:generate_graphs' %}">
+    Перейти к генерации графиков
+  </a>
+  {% endif %}
+  <div class="main-content">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <form method="get" class="filter-form">
+        <h2>Фильтры</h2>
+
+        <!-- Фильтр по категории -->
+        <div class="filter-section">
+          <h3>Категории</h3>
+          {% for category in categories %}
+          <div>
+            <input type="checkbox" name="category" value="{{ category.id }}" id="category-{{ category.id }}"
+            >
+            <label for="category-{{ category.id }}">{{ category.name }}</label>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Фильтр по цене -->
+        <div class="filter-section">
+          <h3>Цена</h3>
+          <label for="min_price">От:</label>
+          <input
+            type="number"
+            name="min_price"
+            id="min_price"
+            value="{{ request.GET.min_price|default:'' }}"
+          />
+          <label for="max_price">До:</label>
+          <input
+            type="number"
+            name="max_price"
+            id="max_price"
+            value="{{ request.GET.max_price|default:'' }}"
+          />
+        </div>
+
+        <button type="submit" class="filter-button">Применить</button>
+      </form>
+    </aside>
+
+    <!-- Products -->
+    <div class="product-grid">
+      {% for product in page_obj %}
+      <a
+        href="{% url 'catalog:product_detail' product.id %}"
+        class="product-card-link"
+      >
+        <div class="product-card">
+          <img
+            src="{{ product.image.url }}"
+            alt="{{ product.name }}"
+            class="product-image"
+          />
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description|truncatewords:10 }}</p>
+          <p class="price">${{ product.price }}</p>
+        </div>
+      </a>
+      {% empty %}
+      <p>Нет товаров, соответствующих фильтрам.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Пагинация -->
+  <div class="pagination">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+      <a
+        class="theme-text"
+        href="?page=1{% if request.GET.category %}&category={{ request.GET.category|join:',' }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"
+      >
+        &laquo; Первая
+      </a>
+      <a
+        class="theme-text"
+        href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category|join:',' }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"
+      >
+        Назад
+      </a>
+      {% endif %}
+
+      <span class="current">
+        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+      </span>
+
+      {% if page_obj.has_next %}
+      <a
+        class="theme-text"
+        href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category|join:',' }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"
+      >
+        Вперёд
+      </a>
+      <a
+        class="theme-text"
+        href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.category %}&category={{ request.GET.category|join:',' }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"
+      >
+        Последняя &raquo;
+      </a>
+      {% endif %}
+    </span>
   </div>
 </div>
 

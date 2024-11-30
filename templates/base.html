@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="ru" {% if request.theme == 'dark' %}data-theme="dark"{% else %}data-theme="light"{% endif %}>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Chart</title>
     {% load static %}
     {% load user_tags %}
-
-
     <link
-      type="text/css"
-      href="{% static '/css/styles.css' %}"
-      rel="stylesheet"
+            type="text/css"
+            href="{% static '/css/styles.css' %}"
+            rel="stylesheet"
     />
     <link
-      type="text/css"
-      href="{% static '/css/styles_product_details.css' %}"
-      rel="stylesheet"
+            type="text/css"
+            href="{% static '/css/styles_product_details.css' %}"
+            rel="stylesheet"
     />
     <link
-      type="text/css"
-      href="{% static '/css/styles_form.css' %}"
-      rel="stylesheet"
+            type="text/css"
+            href="{% static '/css/styles_form.css' %}"
+            rel="stylesheet"
     />
-  </head>
-  <body>
-    <header class="header">
-      <div class="logo"><a href="{% url 'catalog:catalog' %}">Chart</a></div>
-      <div class="search-bar">
-        <input type="text" placeholder="Найти на Chart" />
-      </div>
-      <div class="icons">
+</head>
+<body>
+<header class="header">
+    <div class="logo"><a href="{% url 'catalog:catalog' %}">Chart</a></div>
+    <div class="search-bar">
+        <input type="text" placeholder="Найти на Chart"/>
+    </div>
+    <div class="icons">
         {% if user.is_authenticated %}
-        <span><a href="{% url 'users:profile' %}">{{ user.username }}</a></span>
-        <span><a href="{% url 'users:coins_page' %}">Монеты: {{ user.coins }} ₽</a></span>
+        <span><a
+                href="{% url 'users:profile' %}">{{ user.username }}</a></span>
+        <span><a
+                href="{% url 'users:coins_page' %}">Монеты: {{ user.coins }} ₽</a></span>
         <span><a href="{% url 'users:logout' %}">Выйти</a></span>
 
         <!-- Проверка групп пользователя -->
         {% if user|in_group:"Courier" %}
-        <span><a href="{% url 'order:order_list_for_courier' %}">Заказы</a></span>
+        <span><a
+                href="{% url 'order:order_list_for_courier' %}">Заказы</a></span>
         {% elif user|in_group:"Seller" %}
-        <span><a href="{% url 'catalog:seller_products' %}">Мои продукты</a></span>
+        <span><a
+                href="{% url 'catalog:seller_products' %}">Мои продукты</a></span>
         {% endif %}
 
         {% else %}
@@ -50,8 +53,8 @@
         <span><a href="{% url 'catalog:catalog' %}">Товары</a></span>
         <span><a href="{% url 'cart:cart' %}">Корзина</a></span>
 
-      </div>
-    </header>
-    {% block content %} {% endblock %}
-  </body>
+    </div>
+</header>
+{% block content %} {% endblock %}
+</body>
 </html>

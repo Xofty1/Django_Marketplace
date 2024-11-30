@@ -8,19 +8,17 @@
     <thead>
     <tr>
         <th>ID заказа</th>
-        <th>Описание</th>
         <th>Стоимость</th>
         <th>Курьер</th>
         <th>Дата создания заказа</th>
         <th>Адрес доставки</th>
-        <th>Действие</th>
+        <th>Доставка заказ</th>
     </tr>
     </thead>
     <tbody>
     {% for order in orders %}
     <tr>
         <td>{{ order.id }}</td>
-        <td>{{ order.requires_delivery|yesno:"Да,Нет" }}</td>
         <td>{{ order.total_cost }}</td>
         <td>
             {% if order.courier_booking %}
@@ -41,7 +39,9 @@
 <!--                {% csrf_token %}-->
 <!--                <button type="submit">Забронировать</button>-->
 <!--            </form>-->
-            <a href="{% url 'order:book_order' order.id %}">Забронировать</a>
+            <a class="theme-text" href="{% url 'order:book_order' order.id %}">Доставить</a>
+            {% elif order.courier_booking and order.requires_delivery %}
+            <a class="theme-text" href="{% url 'order:book_delete' order.id %}">Отменить</a>
             {% elif not order.requires_delivery %}
             <em>Не требует доставки</em>
             {% else %}

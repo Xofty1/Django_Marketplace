@@ -16,8 +16,6 @@ class Order(models.Model):
                                             verbose_name="Требуется доставка")
     delivery_address = models.TextField(null=True, blank=True,
                                         verbose_name="Адрес доставки")
-    payment_on_get = models.BooleanField(default=False,
-                                         verbose_name="Оплата при получении")
     is_paid = models.BooleanField(default=False, verbose_name="Оплачено")
 
     total_cost = models.DecimalField(max_digits=10, decimal_places=2,

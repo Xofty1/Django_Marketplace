@@ -1,6 +1,6 @@
 from django.urls import path, reverse_lazy
 
-from cart.views import cart_add, cart_remove, cart, cart_update
+from cart.views import cart_add, cart_remove, cart, cart_update,cart_delete
 
 app_name = 'cart'
 
@@ -10,5 +10,7 @@ urlpatterns = [
     path('', cart, name='cart'),
     path('update/<int:product_id>/', cart_update,
          name='cart_update'),
+    path('delete/<int:product_id>/', cart_delete,
+         name='cart_delete'),
 
 ]

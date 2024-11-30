@@ -16,7 +16,6 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.shortcuts import redirect
 from django.urls import path, include
 from django.views.generic import RedirectView
 

@@ -131,3 +131,22 @@ def book_order(request, order_id):
 
     return redirect(
         'order:order_list_for_courier')  # Перенаправление на список заказов
+
+
+@login_required
+def book_delete(request, order_id):
+    # Проверяем, является ли пользователь курьером
+    if not request.user.groups.filter(name='Courier').exists():
+        return HttpResponseForbidden(
+            "Только курьеры могут удалять заказы.")
+
+    order = get_object_or_404(Order, id=order_id)
+
+    # Проверяем, не забронирован ли заказ
+    if hasattr(order, 'courier_booking'):
+        courier_order = CourierOrder.objects.get(courier=request.user,
+                                                 order=order)
+        courier_order.delete()
+
+    return redirect(
+        'order:order_list_for_courier')  # Перенаправление на список заказов
