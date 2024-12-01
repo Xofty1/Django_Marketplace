@@ -1,20 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<h1 class="page_name">Мои заказы</h1>
 
-{% block content %}
-<h1>Мои заказы</h1>
-
-    {% if orders %}
-        <ul>
-            {% for order in orders %}
-                <li>
-                    <a href="{% url 'order:order_detail' order.id %}">
-                        Заказ № {{ order.id }} ({{ order.status }}) - {{ order.total_cost }} ₽
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>У вас нет заказов.</p>
-    {% endif %}
-
-{% endblock %}
+{% if orders %}
+<ul class="order_ul">
+  {% for order in orders %}
+  <li>
+    <a class="theme-text" href="{% url 'order:order_detail' order.id %}">
+      Заказ № {{ order.id }} ({{ order.status }}) - {{ order.total_cost }} ₽
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>У вас нет заказов.</p>
+{% endif %} {% endblock %}

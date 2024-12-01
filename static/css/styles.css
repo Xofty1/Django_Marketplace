@@ -113,38 +113,29 @@ footer {
 button {
   background-color: var(--accent-color); /* Фон кнопки */
   color: #fff; /* Цвет текста */
-  border: none;
-  padding: 12px 20px;
-  border-radius: 5px;
+  padding: 10px 20px;
   font-size: 16px;
-  font-weight: 600;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease; /* Плавный переход для всех изменений */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень */
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--text-color);
+  border: 2px solid var(--header-footer-background);
+  background-color: var(--header-footer-background);
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Эффект при наведении */
 button:hover {
-  background-color: darken(
-    var(--accent-color),
-    10%
-  ); /* Более темный фон при наведении */
-  transform: scale(1.05); /* Немного увеличиваем кнопку при наведении */
-  box-shadow: 0 6px 12px var(--secondary-accent); /* Более выраженная тень */
   opacity: 0.9; /* Легкое уменьшение непрозрачности */
+  background-color: var(--background-color);
+  color: var(--header-footer-background);
+  transform: scale(1.05);
 }
 
 /* Эффект при нажатии */
 button:active {
   transform: scale(0.98); /* Кнопка немного сжимается при нажатии */
   opacity: 1; /* Возвращаем нормальную непрозрачность */
-}
-
-/* Фокусировка на кнопке (для удобства использования клавиатурой) */
-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--secondary-accent); /* Синий фокус */
 }
 
 .theme-text {
@@ -200,7 +191,7 @@ a {
 }
 
 .menu_item:hover .menu_text {
-  color: #fff; /* Цвет текста при наведении */
+  color: #faf9f6; /* Цвет текста при наведении */
 }
 
 .search-bar input {
@@ -224,10 +215,6 @@ a {
   color: #faf9f6;
   font-size: 14px;
   font-weight: bold;
-}
-
-.icons a:hover {
-  color: #f4d03f;
 }
 
 @media (max-width: 768px) {
@@ -273,4 +260,20 @@ h3 {
 
 .theme-text:hover {
   color: var(--accent-color);
+}
+
+.coin_button {
+  width: 300px;
+  height: 300px;
+  border-radius: 100%;
+  margin-top: 20px;
+}
+
+.coins {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.registration-form {
+  margin-bottom: 20px;
 }

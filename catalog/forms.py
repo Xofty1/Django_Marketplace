@@ -6,4 +6,4 @@ from catalog.models import Product
 class AddProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['count', 'price', 'category', 'name', 'image']
+        fields = ['count', 'price', 'category', 'name', 'description', 'image']

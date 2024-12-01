@@ -1,38 +1,49 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<h1>Оформление заказа</h1>
+{% extends 'base.html' %} {% block content %}
+<h1 class="page_name">Оформление заказа</h1>
 
 <form method="POST">
-    {% csrf_token %}
-    {{ order_form.as_p }}
+  {% csrf_token %} {% for field in order_form %}
+  <div class="form-group">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }} {% if field.help_text %}
+    <div class="form-help">{{ field.help_text }}</div>
+    {% endif %} {% if field.errors %}
+    <div class="form-error">
+      {% for error in field.errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+  <p class="button_p">
     <button type="submit">Оформить заказ</button>
+  </p>
 </form>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const requiresDelivery = document.getElementById('id_requires_delivery');
-        const deliveryAddress = document.getElementById('id_delivery_address');
+  document.addEventListener("DOMContentLoaded", function () {
+    const requiresDelivery = document.getElementById("id_requires_delivery");
+    const deliveryAddress = document.getElementById("id_delivery_address");
 
-        // Адрес пользователя для автоматического заполнения
-        const userAddress = "{{ user.address|escapejs }}";
+    // Адрес пользователя для автоматического заполнения
+    const userAddress = "{{ user.address|escapejs }}";
 
-        // Функция управления полем доставки
-        function toggleDeliveryAddress() {
-            if (requiresDelivery.checked) {
-                deliveryAddress.value = userAddress; // Устанавливаем адрес пользователя
-                deliveryAddress.readOnly = true; // Блокируем поле
-            } else {
-                deliveryAddress.value = ''; // Очищаем поле
-                deliveryAddress.readOnly = false; // Разблокируем поле
-            }
-        }
+    // Функция управления полем доставки
+    function toggleDeliveryAddress() {
+      if (requiresDelivery.checked) {
+        deliveryAddress.value = userAddress; // Устанавливаем адрес пользователя
+        deliveryAddress.readOnly = true; // Блокируем поле
+      } else {
+        deliveryAddress.value = ""; // Очищаем поле
+        deliveryAddress.readOnly = false; // Разблокируем поле
+      }
+    }
 
-        // Инициализация состояния при загрузке
-        toggleDeliveryAddress();
+    // Инициализация состояния при загрузке
+    toggleDeliveryAddress();
 
-        // Событие изменения
-        requiresDelivery.addEventListener('change', toggleDeliveryAddress);
-    });
-
+    // Событие изменения
+    requiresDelivery.addEventListener("change", toggleDeliveryAddress);
+  });
 </script>
 {% endblock %}

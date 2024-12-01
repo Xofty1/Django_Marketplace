@@ -1,21 +1,24 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="container">
+  <h1 class="page_name">Детали заказа № {{ order.id }}</h1>
 
-    <h1>Детали заказа № {{ order.id }}</h1>
+  <p class="order_p">Дата создания: {{ order.created_timestamp }}</p>
+  <p class="order_p">Статус: {{ order.status }}</p>
+  <p class="order_p">Общая стоимость: {{ order.total_cost }} ₽</p>
 
-    <p>Дата создания: {{ order.created_timestamp }}</p>
-    <p>Статус: {{ order.status }}</p>
-    <p>Общая стоимость: {{ order.total_cost }} ₽</p>
-
-    <h2>Товары в заказе:</h2>
+  <h2 class="order_h2">Товары в заказе:</h2>
+  <ul>
     <ul>
-        {% for item in order_items %}
-            <li>{{ item.product.name }} - {{ item.quantity }} x {{ item.product.price }} ₽</li>
-        {% endfor %}
+      {% for item in order_items %}
+      <li class="order_li">
+        <span class="product-name">{{ item.product.name }}</span>
+        <span class="product-quantity">{{ item.quantity }} шт</span>
+        <span class="product-price">{{ item.product.price }} монет</span>
+      </li>
+      {% endfor %}
     </ul>
+  </ul>
 </div>
 
 {% endblock %}

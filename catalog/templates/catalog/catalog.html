@@ -6,9 +6,15 @@
 
   {% else %}
   <h1 class="page_name">Мои продукты</h1>
-  <a class="theme-text" href="{% url 'catalog:generate_graphs' %}">
-    Перейти к генерации графиков
-  </a>
+  <div class="seller_tools">
+    <a class="theme-text" href="{% url 'catalog:add_product' %}"
+      >Добавить продукт</a
+    >
+
+    <a class="theme-text" href="{% url 'catalog:generate_graphs' %}">
+      Анализ конкурентов
+    </a>
+  </div>
   {% endif %}
   <div class="main-content">
     <!-- Sidebar -->
@@ -62,21 +68,26 @@
     <!-- Products -->
     <div class="product-grid">
       {% for product in page_obj %}
-      <a
-        href="{% url 'catalog:product_detail' product.id %}"
-        class="product-card-link"
-      >
-        <div class="product-card">
+      <div class="product-card">
+        <a
+          href="{% url 'catalog:product_detail' product.id %}"
+          class="product-card-link"
+        >
           <img
             src="{{ product.image.url }}"
             alt="{{ product.name }}"
             class="product-image"
           />
           <h3>{{ product.name }}</h3>
-          <p>{{ product.description|truncatewords:10 }}</p>
           <p class="price">${{ product.price }}</p>
+        </a>
+        {% if seller_request %}
+        <div class="product-actions">
+          <a href="{% url 'catalog:update_product' product.id %}">Изменить</a>
+          <a href="{% url 'catalog:delete_product' product.id %}">Удалить</a>
         </div>
-      </a>
+        {% endif %}
+      </div>
       {% empty %}
       <p>Нет товаров, соответствующих фильтрам.</p>
       {% endfor %}

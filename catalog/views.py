@@ -2,65 +2,27 @@ import os
 from decimal import Decimal
 
 import matplotlib
+
 matplotlib.use('Agg')
 from django.db.models import Count
 from faker import Faker
 
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 
 from catalog.forms import AddProductForm
 from catalog.models import Product, Category
 import matplotlib.pyplot as plt
-from django.core.paginator import Paginator
 from django.shortcuts import render
 
 faker = Faker()
 
-# def catalog_view(request):
-#     products = Product.objects.all()
-#     return render(request, 'catalog/catalog.html', {'products': products})
-
 from django.core.paginator import Paginator
-from django.db.models import Q
-
-# def catalog_view(request):
-#     # Получение всех продуктов
-#     products = Product.objects.all()
-#
-#     # Фильтры по GET-параметрам
-#     category_ids = request.GET.getlist('category')  # Выбранные категории
-#     min_price = request.GET.get('min_price')
-#     max_price = request.GET.get('max_price')
-#
-#     # Применение фильтров
-#     if category_ids:
-#         products = products.filter(category__id__in=category_ids)
-#     if min_price:
-#         products = products.filter(price__gte=min_price)
-#     if max_price:
-#         products = products.filter(price__lte=max_price)
-#
-#     # Пагинация
-#     paginator = Paginator(products, 20)  # 20 продуктов на странице
-#     page_number = request.GET.get('page')
-#     page_obj = paginator.get_page(page_number)
-#
-#     # Передача категорий для фильтров
-#     categories = Category.objects.all()
-#
-#     return render(
-#         request,
-#         'catalog/catalog.html',
-#         {
-#             'page_obj': page_obj,
-#             'categories': categories
-#         }
-#     )
 
 def catalog_view(request):
     # Получение всех продуктов
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('-id')
+
 
     # Фильтры по GET-параметрам
     category_ids = request.GET.getlist('category')  # Выбранные категории
@@ -161,7 +123,7 @@ def add_random_product(request):
 @user_passes_test(is_seller)
 def seller_products(request):
     # Получаем продукты, добавленные текущим пользователем
-    products = Product.objects.filter(seller=request.user)
+    products = Product.objects.filter(seller=request.user).order_by('-id')
 
     # Фильтры по GET-параметрам
     category_ids = request.GET.getlist('category')  # Выбранные категории

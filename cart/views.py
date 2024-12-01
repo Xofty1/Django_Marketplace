@@ -1,15 +1,7 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
 
-from cart.models import Cart
-from catalog.models import Product
-
-from django.http import JsonResponse
-from django.views import View
-from django.db import transaction
 from .models import Product, Cart
 
 
@@ -65,10 +57,13 @@ def cart_remove(request, product_id):
 @login_required
 def cart(request):
     cart_items = Cart.objects.filter(user=request.user)
+    total_price = 0
     for item in cart_items:
         item.total_price = item.product.price * item.quantity
+        total_price += item.total_price
     return render(request, 'cart/cart_detail.html',
-                  {'cart_items': cart_items})
+                  {'cart_items': cart_items,
+                   'total_price': total_price})
 
 
 @login_required

@@ -1,61 +1,80 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<h1>Корзина</h1>
+{% extends 'base.html' %} {% block content %}
+<h1 class="page_name">Корзина</h1>
 
 {% if cart_items %}
 <table>
-    <thead>
+  <thead>
     <tr>
-        <th>Товар</th>
-        <th>Количество</th>
-        <th>Цена</th>
-        <th>Сумма</th>
-        <th>Действия</th>
+      <th>Товар</th>
+      <th>Количество</th>
+      <th>Цена</th>
+      <th>Сумма</th>
+      <th>Действия</th>
     </tr>
-    </thead>
-    <tbody>
+  </thead>
+  <tbody>
     {% for item in cart_items %}
     <tr>
-        <td>{{ item.product.name }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.product.price }} ₽</td>
-        <td>{{ item.total_price|floatformat:2 }} ₽</td>
-        <td>
-            <form action="{% url 'cart:cart_update' item.product.id %}"
-                  method="post" style="display: inline;">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="decrease">
-                <button type="submit" class="btn btn-danger">-</button>
-            </form>
-            <form action="{% url 'cart:cart_update' item.product.id %}"
-                  method="post" style="display: inline;">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="increase">
-                <button type="submit" class="btn">+</button>
-            </form>
-            <form action="{% url 'cart:cart_delete' item.product.id %}"
-                  method="post" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn">Удалить</button>
-            </form>
-        </td>
+      <td>{{ item.product.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.product.price }} ₽</td>
+      <td>{{ item.total_price|floatformat:2 }} ₽</td>
+      <td class="cart_action">
+        <form
+          action="{% url 'cart:cart_update' item.product.id %}"
+          method="post"
+          style="display: inline"
+        >
+          {% csrf_token %}
+          <input type="hidden" name="action" value="decrease" />
+          <p class="button_p">
+            <button type="submit">-</button>
+          </p>
+        </form>
+        <form
+          action="{% url 'cart:cart_update' item.product.id %}"
+          method="post"
+          style="display: inline"
+        >
+          {% csrf_token %}
+          <input type="hidden" name="action" value="increase" />
+          <p class="button_p">
+            <button type="submit">+</button>
+          </p>
+        </form>
+        <form
+          action="{% url 'cart:cart_delete' item.product.id %}"
+          method="post"
+          style="display: inline"
+        >
+          {% csrf_token %}
+          <p class="button_p">
+            <button type="submit">Удалить</button>
+          </p>
+        </form>
+      </td>
     </tr>
     {% endfor %}
-    </tbody>
-
+  </tbody>
 </table>
 
 <p class="total">Итого: {{ total_price|floatformat:2 }} ₽</p>
 
 <div class="actions">
-    <a href="{% url 'catalog:catalog' %}" class="btn theme-text" >Продолжить покупки</a>
+  <a href="{% url 'catalog:catalog' %}" class="btn theme-text"
+    >Продолжить покупки</a
+  >
 </div>
 <div class="actions">
-    <a href="{% url 'order:order_create' %}" class="btn theme-text">Оформить заказ</a>
+  <a href="{% url 'order:order_create' %}" class="btn theme-text"
+    >Оформить заказ</a
+  >
 </div>
 {% else %}
-<p>Ваша корзина пуста. <a href="{% url 'catalog:catalog' %}" class="theme-text">Вернуться к
-    покупкам</a>.</p>
-{% endif %}
-{% endblock %}
+<p>
+  Ваша корзина пуста.
+  <a href="{% url 'catalog:catalog' %}" class="theme-text"
+    >Вернуться к покупкам</a
+  >.
+</p>
+{% endif %} {% endblock %}
