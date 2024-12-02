@@ -111,20 +111,19 @@ def add_random_product(request):
                 count=faker.random_int(min=1, max=100),
                 price=Decimal(faker.random_int(min=100, max=10000) / 100),
                 category=faker.random.choice(categories),
-                name=faker.word().capitalize()
+                name=faker.word().capitalize(),
+                description=faker.text(max_nb_chars=200)  # Добавляем описание
             )
 
         return redirect('catalog:seller_products')
 
-    products = Product.objects.filter(seller=request.user)
-    return render(request, 'catalog/seller_products.html', {'products': products})
-
-
+    return redirect('users:coins_page')
 
 @login_required
 @user_passes_test(is_seller)
+
 def seller_products(request):
-    # Получаем продукты, добавленные текущим пользователем
+    # Получение всех продуктов
     products = Product.objects.filter(seller=request.user).order_by('-id')
 
     # Фильтры по GET-параметрам
@@ -154,9 +153,13 @@ def seller_products(request):
         {
             'page_obj': page_obj,
             'categories': categories,
+            'selected_categories': category_ids,  # Передача выбранных категорий
+            'min_price': min_price,               # Передача фильтра цен
+            'max_price': max_price,
             'seller_request': True
         }
     )
+
 
 
 

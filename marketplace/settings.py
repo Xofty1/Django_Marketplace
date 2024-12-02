@@ -37,12 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_extensions',
+    'django_er_diagram',
     'users',
     'catalog',
     'cart',
     'order',
     'api',
     'rest_framework',
+
 ]
 
 MIDDLEWARE = [
@@ -164,3 +167,19 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 86400
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# В settings.py
+
+# Указываем приложения, для которых нужно генерировать диаграмму
+DJANGO_ER_DIAGRAM_ONLY_APPS = ['cart', 'catalog', 'order', 'users']
+
+# Указываем приложения, которые нужно игнорировать (если необходимо)
+DJANGO_ER_DIAGRAM_IGNORE_APPS = []
+
+# Указываем формат вывода (html или md) — для png будет работать default
+# Важно! Этот параметр не влияет на формат изображения, он задает формат документации
+DJANGO_ER_DIAGRAM_OUTPUT_FORMAT = 'html'  # или 'md', в зависимости от того, хотите ли вы документацию
+
+# Указываем директорию для сохранения диаграммы
+DJANGO_ER_DIAGRAM_OUTPUT_DIRECTORY = 'diagrams'  # Можно выбрать любую директорию, например 'diagrams'
+

@@ -14,6 +14,12 @@
     <a class="theme-text" href="{% url 'catalog:generate_graphs' %}">
       Анализ конкурентов
     </a>
+
+    <form method="POST" action="{% url 'catalog:add_random_product' %}">
+    {% csrf_token %}
+    <button type="submit" class="theme-text">Добавить случайные продукты</button>
+</form>
+
   </div>
   {% endif %}
   <div class="main-content">

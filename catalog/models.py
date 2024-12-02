@@ -4,7 +4,6 @@ from users.models import User
 
 
 def product_image_upload_path(instance, filename):
-    # Если ID еще нет, присвоим временное значение `unknown`
     product_id = instance.id if instance.id else 'unknown'
     return f'product_images/{product_id}/{filename}'
 
@@ -14,7 +13,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-
+    class Meta:
+        verbose_name = "Категории"
+        verbose_name_plural = "Категории"
 
 class Product(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE,
@@ -40,3 +41,7 @@ class Product(models.Model):
         if self.image and self.image.name != "product_images/default_product.jpg":
             self.image.delete(save=False)
         super().delete(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Продукты"
+        verbose_name_plural = "Продукты"

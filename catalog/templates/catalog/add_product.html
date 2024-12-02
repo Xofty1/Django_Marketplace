@@ -4,7 +4,7 @@
   <h1 class="page_name">Добавить продукт</h1>
 
   <!-- Форма для изменения данных и переключения темы -->
-  <form method="post">
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %} {% for field in form %}
     <div class="form-group">
       <label for="{{ field.id_for_label }}">{{ field.label }}</label>
@@ -15,10 +15,14 @@
         {% for error in field.errors %}
         <p>{{ error }}</p>
         {% endfor %}
+
       </div>
       {% endif %}
     </div>
     {% endfor %}
+    {% if form.image.errors %}
+    <div class="error">{{ form.image.errors }}</div>
+  {% endif %}
 
     <!-- Кнопка для переключения темы -->
     <button type="submit">Добавить</button>
