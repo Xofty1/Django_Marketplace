@@ -23,7 +23,6 @@ def catalog_view(request):
     # Получение всех продуктов
     products = Product.objects.all().order_by('-id')
 
-
     # Фильтры по GET-параметрам
     category_ids = request.GET.getlist('category')  # Выбранные категории
     min_price = request.GET.get('min_price')
@@ -51,9 +50,12 @@ def catalog_view(request):
         {
             'page_obj': page_obj,
             'categories': categories,
-            'seller_request': False
+            'selected_categories': category_ids,  # Передача выбранных категорий
+            'min_price': min_price,               # Передача фильтра цен
+            'max_price': max_price                # Передача фильтра цен
         }
     )
+
 
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)

@@ -27,7 +27,9 @@ urlpatterns = [
     path('catalog/', include('catalog.urls', namespace="catalog")),
     path('cart/', include('cart.urls', namespace="cart")),
     path('order/', include('order.urls', namespace="order")),
-    path('', RedirectView.as_view(pattern_name='catalog:catalog', permanent=False)),
+    path('api/', include('api.urls', namespace="api")),
+    path('', RedirectView.as_view(pattern_name='catalog:catalog',
+                                  permanent=False)),
 ]
 
 if settings.DEBUG:
