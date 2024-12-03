@@ -67,3 +67,20 @@
 .order_ul li {
   margin: 7px;
 }
+
+.status-in_progress {
+  color: orange;
+}
+.status-paid {
+  color: green;
+}
+.status-shipped {
+  color: blue;
+}
+.status-delivered {
+  color: darkgreen;
+}
+.status-cancelled {
+  color: red;
+  text-decoration: line-through;
+}

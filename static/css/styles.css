@@ -87,6 +87,7 @@ table {
   --button-text-color: #fff;
   --accent-color: #a3d9a5;
   --secondary-accent: #ffd8c2;
+  --checkbox-color: #ffd8c2;
 }
 
 [data-theme="dark"] {
@@ -97,6 +98,7 @@ table {
   --button-text-color: #fff;
   --accent-color: #917fb3;
   --secondary-accent: #f4a259;
+  --checkbox-color: #f4a259;
 }
 
 body {
@@ -155,6 +157,7 @@ a {
   align-items: center;
   color: #fff;
   padding: 10px 20px;
+  border-radius: 0 0 15px 15px;
 }
 
 .logo {
@@ -276,4 +279,83 @@ h3 {
 
 .registration-form {
   margin-bottom: 20px;
+}
+
+.footer {
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 15px 15px 0 0;
+}
+
+.footer-links {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Контейнер для чекбокса */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+/* Скрыть стандартный чекбокс */
+.checkbox-container input[type="checkbox"] {
+  display: none;
+}
+
+/* Пользовательский стиль чекбокса */
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #6c757d;
+  border-radius: 4px;
+  background-color: #fff;
+  position: relative;
+  margin-right: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Галочка внутри чекбокса */
+.checkbox-custom::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 10px;
+  height: 10px;
+  background-color: var(--checkbox-color);
+  border-radius: 2px;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Состояние "активный" для чекбокса */
+.checkbox-container input[type="checkbox"]:checked + .checkbox-custom {
+  border-color: var(--checkbox-color);
+  background-color: var(--checkbox-color);
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkbox-custom::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.checkbox-container:hover .checkbox-label {
+  color: var(--checkbox-color);
+}
+
+/* Контейнер страницы */
+body {
+  display: flex;
+  flex-direction: column; /* Включаем вертикальную ориентацию элементов */
+  min-height: 100vh; /* Минимальная высота контейнера на весь экран */
+}
+
+/* Контент */
+.content {
+  flex: 1; /* Контент растягивается, чтобы занять доступное пространство */
 }

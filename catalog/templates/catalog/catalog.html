@@ -33,14 +33,18 @@
       <h3>Категории</h3>
       {% for category in categories %}
       <div>
-        <input
-          type="checkbox"
-          name="category"
-          value="{{ category.id }}"
-          id="category-{{ category.id }}"
-          {% if category.id|stringformat:"s" in selected_categories %}checked{% endif %}
-        />
-        <label for="category-{{ category.id }}">{{ category.name }}</label>
+        <div class="checkbox-container">
+    <input
+        type="checkbox"
+        name="category"
+        value="{{ category.id }}"
+        id="category-{{ category.id }}"
+        {% if category.id|stringformat:"s" in selected_categories %}checked{% endif %}
+    />
+    <span class="checkbox-custom"></span>
+    <label class="a_cart" for="category-{{ category.id }}">{{ category.name }}</label>
+</div>
+
       </div>
       {% endfor %}
     </div>
@@ -87,7 +91,7 @@
             class="product-image"
           />
           <h3>{{ product.name }}</h3>
-          <p class="price">${{ product.price }}</p>
+          <p class="price">{{ product.price }} м.</p>
         </a>
         {% if seller_request %}
         <div class="product-actions">

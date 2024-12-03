@@ -188,7 +188,6 @@ body {
   transition: color 0.3s ease;
   color: var(--text-color);
   font-size: 16px;
-  margin-bottom: 8px;
 }
 
 .a_cart:hover {

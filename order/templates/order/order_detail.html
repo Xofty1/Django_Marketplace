@@ -4,7 +4,10 @@
   <h1 class="page_name">Детали заказа № {{ order.id }}</h1>
 
   <p class="order_p">Дата создания: {{ order.created_timestamp }}</p>
-  <p class="order_p">Статус: {{ order.status }}</p>
+  <p class="order_p status-{{ order.status }}">
+    Статус: {{ order.get_status_display }}
+  </p>
+
   <p class="order_p">Общая стоимость: {{ order.total_cost }} ₽</p>
 
   <h2 class="order_h2">Товары в заказе:</h2>

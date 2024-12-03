@@ -3,7 +3,6 @@
 <div class="container">
   <h1 class="page_name">Добавить продукт</h1>
 
-  <!-- Форма для изменения данных и переключения темы -->
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %} {% for field in form %}
     <div class="form-group">
@@ -24,7 +23,6 @@
     <div class="error">{{ form.image.errors }}</div>
   {% endif %}
 
-    <!-- Кнопка для переключения темы -->
     <button type="submit">Добавить</button>
   </form>
 </div>
