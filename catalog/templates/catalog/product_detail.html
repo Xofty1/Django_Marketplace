@@ -14,7 +14,7 @@
       {% endif %}
       <p><strong>Price:</strong> ${{ product.price }}</p>
 
-      <p>{{ product.description|truncatewords:10 }}</p>
+      <p>{{ product.description }}</p>
       {% csrf_token %}
       <form action="{% url 'cart:cart_add' product.id %}" method="post">
         {% csrf_token %}

@@ -117,7 +117,7 @@ def add_random_product(request):
 
         return redirect('catalog:seller_products')
 
-    return redirect('users:coins_page')
+    return redirect('catalog:seller_products')
 
 @login_required
 @user_passes_test(is_seller)

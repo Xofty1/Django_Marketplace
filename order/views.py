@@ -146,6 +146,8 @@ def book_delete(request, order_id):
     if hasattr(order, 'courier_booking'):
         courier_order = CourierOrder.objects.get(courier=request.user,
                                                  order=order)
+        order.status = "in_progress"
+        order.save()
         courier_order.delete()
 
     return redirect(
